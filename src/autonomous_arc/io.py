@@ -21,12 +21,15 @@ def load_task_dir(path: str | Path) -> list[Task]:
     return [load_task(p) for p in sorted(root.glob("*.json"))]
 
 
-def write_predictions(path: str | Path, task_id: str, predictions: list[Grid]) -> None:
+def write_predictions(path: str | Path, task_id: str, predictions: list[list[Grid]]) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "task_id": task_id,
-        "predictions": [thaw_grid(grid) for grid in predictions],
+        "predictions": [
+            [thaw_grid(grid) for grid in test_predictions]
+            for test_predictions in predictions
+        ],
     }
     path.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
