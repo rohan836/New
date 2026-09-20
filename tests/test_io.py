@@ -18,4 +18,4 @@ def test_prediction_writer(tmp_path):
     path = tmp_path / "pred.json"
     write_predictions(path, "x", [[freeze_grid([[1]])]])
     payload = json.loads(path.read_text())
-    assert payload["predictions"] == [[[1]]]
+    assert payload["predictions"] == [[[[1]]]]
