@@ -8,7 +8,8 @@ SCORE_RESULTS = True
 VISUALIZE = False
 
 # 1. SETUP PATHS AND IMPORT MODULES
-SRC_DIR = Path.cwd() / "src"
+BASELINE_DIR = Path(__file__).resolve().parent
+SRC_DIR = BASELINE_DIR / "src"
 sys.path.insert(0, str(SRC_DIR))
 
 import utils
@@ -53,9 +54,9 @@ print(f"Using preset: {cli_args.preset}")
 
 args_dict = {
     "name": "submission_run",
-    "data_path": Path("assets/challenges.json"),
-    "train_log_file": Path("runs/training_log.txt"),
-    "save_path": Path("runs/tiny.pt"),
+    "data_path": BASELINE_DIR / "assets/challenges.json",
+    "train_log_file": BASELINE_DIR / "runs/training_log.txt",
+    "save_path": BASELINE_DIR / "runs/tiny.pt",
     "checkpoint_path": None, 
     "checkpoint_epochs": list(preset["checkpoint_epochs"]),
     
