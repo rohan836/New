@@ -8,6 +8,8 @@ misc/
 new_dataset_scripts/
 runs/
 checkpoints/
+baselines/mdl_arc/assets/
+baselines/mdl_arc/assets_tmp/
 submissions/**/*.json
 submissions/**/*.jsonl
 *.pt
