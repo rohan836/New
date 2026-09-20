@@ -1,0 +1,6 @@
+{
+  "max_depth": 2,
+  "beam_size": 128,
+  "attempts": 2,
+  "principle": "search executable programs, verify on every training example, then predict test inputs"
+}
