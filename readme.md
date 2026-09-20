@@ -4,9 +4,9 @@
 - 75M parameters
 
 This is one of the **best non-LLM scores** in the world today (if not THE best).  
-It is also the **cheapest**, by far, at that performance.   
+It is also the **cheapest**, by far, at that performance.  
 
-Details: [Blog](https://mvakde.github.io/blog/44-on-arc-1/), [X thread](https://x.com/evilmathkid/status/2029519274835148829)   
+Details: [Blog](https://mvakde.github.io/blog/44-on-arc-1/), [X thread](https://x.com/evilmathkid/status/2029519274835148829)  
 
 
 <a href="https://mvakde.github.io/blog/44-on-arc-1/"><img src="graph.png"></a>
@@ -53,6 +53,8 @@ python run_script.py high # Choose between 3 modes: low, medium, high
 
 ## Citation
 
+### Original work
+
 ```bibtex
 @misc{vakde2025mdlarc,
   author       = {Mithil Vakde},
@@ -61,3 +63,19 @@ python run_script.py high # Choose between 3 modes: low, medium, high
   url          = {https://github.com/mvakde/mdlARC},
 }
 ```
+
+### Current project
+
+This repository is maintained and developed by **Rohan bhise** for further ARC-AGI research, experimentation, and development. It is based on the original **mdlARC** work by **Mithil Vakde**.
+
+```bibtex
+@misc{bhise2026arcagi,
+  author       = {Rohan bhise},
+  title        = {ARC-AGI Research Project},
+  year         = {2026},
+  url          = {https://github.com/rohan836/New},
+  note         = {Based on the original mdlARC work by Mithil Vakde},
+}
+```
+
+The original authorship and MIT license of the upstream project are preserved.
