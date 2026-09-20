@@ -53,20 +53,9 @@ python run_script.py high # Choose between 3 modes: low, medium, high
 
 ## Citation
 
-### Original work
+### Project
 
-```bibtex
-@misc{vakde2025mdlarc,
-  author       = {Mithil Vakde},
-  title        = {mdlARC},
-  year         = {2025},
-  url          = {https://github.com/mvakde/mdlARC},
-}
-```
-
-### Current project
-
-This repository is maintained and developed by **Rohan bhise** for further ARC-AGI research, experimentation, and development. It is based on the original **mdlARC** work by **Mithil Vakde**.
+This repository is maintained and developed by **Rohan bhise**.
 
 ```bibtex
 @misc{bhise2026arcagi,
@@ -74,8 +63,7 @@ This repository is maintained and developed by **Rohan bhise** for further ARC-A
   title        = {ARC-AGI Research Project},
   year         = {2026},
   url          = {https://github.com/rohan836/New},
-  note         = {Based on the original mdlARC work by Mithil Vakde},
 }
 ```
 
-The original authorship and MIT license of the upstream project are preserved.
+The repository retains the existing MIT license and project history.
