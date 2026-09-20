@@ -100,7 +100,7 @@ class Candidate:
 class SolveResult:
     task_id: str
     candidates: list[Candidate] = field(default_factory=list)
-    predictions: list[Grid] = field(default_factory=list)
+    predictions: list[list[Grid]] = field(default_factory=list)
     traces: list[dict[str, Any]] = field(default_factory=list)
 
     @property
