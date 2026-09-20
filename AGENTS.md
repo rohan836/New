@@ -22,7 +22,7 @@ Build an autonomous solver that infers task-specific programs from ARC demonstra
 - configs/: experiment configuration.
 - tests/: unit and integration tests.
 - docs/: architecture, evaluation, and research protocols.
-- Existing top-level src Python files and dataset_building_scripts/ are the legacy baseline.
+- baselines/mdl_arc/: historical transformer baseline.
 
 ## Validation
 python -m pytest -q
