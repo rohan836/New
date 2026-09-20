@@ -8,8 +8,8 @@
 4. Verify exact agreement with every training output.
 5. Rank by training fit, then simplicity.
 6. Search or refine within a bounded budget.
-7. Apply verified programs to unseen test inputs.
-8. Keep at most two distinct hypotheses.
+7. Apply verified programs independently to each unseen test input.
+8. Keep at most two distinct hypotheses for each test input.
 9. Record a trace containing configuration, candidates, and runtime.
 
 The candidate generator can later be replaced without changing verification or scoring.
@@ -20,7 +20,7 @@ The candidate generator can later be replaced without changing verification or s
 - Learned proposals: a trained model can propose programs.
 - Reasoning-model proposals: an external or open-weight model can emit candidates through a provider adapter.
 
-All three enter the same verifier. A proposal is not a solution merely because a model generated it.
+All candidates enter the same verifier. A proposal is not a solution merely because a model generated it.
 
 ## Baseline separation
 
@@ -28,6 +28,6 @@ The existing top-level src Python implementation remains the historical transfor
 
 ## Evaluation isolation
 
-The solver never reads test outputs. Scoring is a separate concern.
+The solver never reads test outputs. Scoring is a separate concern and lives in scorer.py.
 
 ARC-AGI-2 uses public development data plus semi-private and private evaluation tiers. The task format is training demonstrations followed by test inputs, with pixel-perfect outputs required.
