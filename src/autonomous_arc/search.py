@@ -12,7 +12,7 @@ from .verifier import verify
 @dataclass(frozen=True)
 class SearchConfig:
     max_depth: int = 2
-    beam_size: int = 128
+    candidate_budget: int = 128
 
 
 def search(task: Task, config: SearchConfig) -> list[Candidate]:
@@ -23,4 +23,4 @@ def search(task: Task, config: SearchConfig) -> list[Candidate]:
     candidates.sort(key=lambda c: (-c.correct, c.complexity, c.program.label()))
     exact = [c for c in candidates if c.exact]
     remainder = [c for c in candidates if not c.exact]
-    return (exact + remainder)[: config.beam_size]
+    return (exact + remainder)[: config.candidate_budget]
