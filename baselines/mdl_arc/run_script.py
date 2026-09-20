@@ -109,7 +109,7 @@ args_dict = {
     "log_location": "none", # options: none, terminal, file, both.
 }
 cfg = argparse.Namespace(**args_dict) # Convert dictionary to Namespace
-Path("runs").mkdir(parents=True, exist_ok=True) # Create runs dir
+(BASELINE_DIR / "runs").mkdir(parents=True, exist_ok=True) # Create runs dir
 
 # 3. BUILD
 print("Building model and data...")
@@ -148,12 +148,12 @@ eval_result = evaluate.run_evaluation(
     splits=["test"],          
     task_ids=None,
 )
-SUBMISSION_FILE = Path(f"runs/{eval_result[0]}/submission.json")
+SUBMISSION_FILE = BASELINE_DIR / "runs" / eval_result[0] / "submission.json"
 print("Evaluation complete. submission.json generated.")
 
 # 6. RESULTS: score the results (if enabled), then visualise
 if SCORE_RESULTS: # scoring, if enabled
-    SOLUTIONS_FILE = Path("assets/solutions.json")
+    SOLUTIONS_FILE = BASELINE_DIR / "assets" / "solutions.json"
     score = utils.score_arc_submission(SOLUTIONS_FILE, SUBMISSION_FILE)
     if VISUALIZE:
         utils.visualize_submissions(SUBMISSION_FILE, SOLUTIONS_FILE, mode="!")
