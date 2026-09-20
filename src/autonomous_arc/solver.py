@@ -4,19 +4,26 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from time import perf_counter
-from typing import Any
 
 from .program import execute
 from .providers import ProposalProvider
 from .search import SearchConfig, search
-from .types import SolveResult, Task
+from .types import Grid, SolveResult, Task
 
 
 @dataclass(frozen=True)
 class SolverConfig:
     max_depth: int = 2
-    beam_size: int = 128
+    candidate_budget: int = 128
     attempts: int = 2
+
+    def __post_init__(self) -> None:
+        if self.max_depth < 1:
+            raise ValueError("max_depth must be at least 1")
+        if self.candidate_budget < 1:
+            raise ValueError("candidate_budget must be positive")
+        if self.attempts < 1:
+            raise ValueError("attempts must be positive")
 
 
 class AutonomousSolver:
@@ -35,12 +42,13 @@ class AutonomousSolver:
             task,
             SearchConfig(
                 max_depth=self.config.max_depth,
-                beam_size=self.config.beam_size,
+                candidate_budget=self.config.candidate_budget,
             ),
         )
 
         if self.proposal_provider is not None:
             from .verifier import verify
+
             proposed = [
                 verify(task, program, source="model")
                 for program in self.proposal_provider.propose(task)
@@ -48,50 +56,54 @@ class AutonomousSolver:
             candidates = sorted(
                 candidates + proposed,
                 key=lambda c: (-c.correct, c.complexity, c.source, c.program.label()),
-            )[: self.config.beam_size]
+            )[: self.config.candidate_budget]
 
-        predictions = []
-        seen = set()
-        trace_candidates: list[dict[str, Any]] = []
+        verified = [candidate for candidate in candidates if candidate.exact]
+        predictions_by_test: list[list[Grid]] = []
+        per_test_trace = []
 
-        for candidate in candidates:
-            if candidate.correct < candidate.total:
-                continue
-            for test_example in task.test:
+        for test_index, test_example in enumerate(task.test):
+            predictions: list[Grid] = []
+            seen: set[Grid] = set()
+            programs_used: list[str] = []
+
+            for candidate in verified:
                 try:
                     prediction = execute(candidate.program, test_example.input)
                 except (ValueError, IndexError, TypeError):
                     continue
+
                 if prediction not in seen:
                     predictions.append(prediction)
                     seen.add(prediction)
+                    programs_used.append(candidate.program.label())
+
                 if len(predictions) >= self.config.attempts:
                     break
-            trace_candidates.append(
+
+            predictions_by_test.append(predictions)
+            per_test_trace.append(
                 {
-                    "program": candidate.program.label(),
-                    "correct": candidate.correct,
-                    "total": candidate.total,
-                    "complexity": candidate.complexity,
-                    "source": candidate.source,
+                    "test_index": test_index,
+                    "prediction_count": len(predictions),
+                    "programs": programs_used,
                 }
             )
-            if len(predictions) >= self.config.attempts:
-                break
 
         elapsed = perf_counter() - started
+
         return SolveResult(
             task_id=task.task_id,
             candidates=candidates,
-            predictions=predictions,
+            predictions=predictions_by_test,
             traces=[
                 {
                     "task_id": task.task_id,
                     "config": asdict(self.config),
                     "elapsed_seconds": elapsed,
-                    "candidate_trace": trace_candidates,
-                    "prediction_count": len(predictions),
-                    "verified_solution_found": any(c.exact for c in candidates),
+                    "candidate_count": len(candidates),
+                    "verified_solution_count": len(verified),
+                    "tests": per_test_trace,
                 }
             ],
         )
