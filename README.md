@@ -35,15 +35,14 @@ This is a research foundation, not a claim of state-of-the-art performance.
 ## Repository layout
 
 - src/autonomous_arc/ : autonomous solver core.
-- scripts/ : command-line entry points.
+- scripts/ : user-facing entry points.
 - configs/ : experiment configuration.
 - tests/ : automated tests.
 - docs/ : architecture, evaluation discipline, and experiment protocol.
 - examples/ : tiny local smoke tasks.
 - experiments/ : research notes and analysis space.
 - submissions/ : benchmark artifact space.
-- baselines/ : explanation of the retained transformer baseline.
-- src/*.py and dataset_building_scripts/ : historical transformer baseline retained for reproducibility.
+- baselines/mdl_arc/ : retained transformer baseline from the starting repository.
 
 ## Quick start
 
@@ -55,11 +54,7 @@ Run the bundled smoke task:
 
     python scripts/solve.py solve examples/smoke_task.json --output-dir runs/smoke
 
-The run writes:
-
-- one prediction file per task,
-- a solver trace,
-- the searched candidate programs.
+The run writes one prediction file per task, a solver trace, and the searched candidate programs.
 
 Run the test suite:
 
@@ -132,6 +127,8 @@ Official references:
 - Provider interface.
 - Run traces.
 - Tests and smoke task.
+- CI.
+- Citation metadata.
 
 ### Next research layers
 
@@ -144,3 +141,7 @@ Official references:
 - Verifier models trained on correct versus incorrect programs.
 - Search policies learned from prior tasks.
 - Large-scale ARC-AGI-1 and ARC-AGI-2 experiments with frozen evaluation protocols.
+
+## Baseline
+
+The starting transformer experiment is preserved under baselines/mdl_arc/ for reproducibility. It is not the autonomous solver. Keep its measurements separately labeled from autonomous-system measurements.
